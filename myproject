@@ -1,0 +1,6 @@
+1.將wdbc資料集分成三個部分：訓練數據集(training dataset)、測試數據集(test dataset)、驗證數據集(validation dataset)
+  訓練數據集做「模型適合」、測試數據集做「數據轉換」的步驟。
+
+2.Scikit-learn Pipeline物件的工作原理視為「後設估計器」(meta-estimator)，將StandardScaler、PCA、LogisticRegression等物件串聯起來。
+
+3.Test Accuracy: 0.956

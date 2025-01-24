@@ -1,0 +1,42 @@
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+import numpy as np
+
+#1.讀入數據集
+df = pd.read_csv('\Breast Cancer Wisconsin 02\wdbc.data',header=None)
+
+#2.將後面30個特徵指派NumPy的陣列X。使用一個LabelEncoder物件，將原來類別標籤所使用的字串表示法(M和B)轉換成整數
+X = df.loc[:, 2:].values
+y = df.loc[:, 1].values
+le = LabelEncoder()
+y = le.fit_transform(y)
+le.classes_
+np.array(['B','M'],dtype=object)
+
+#3.惡性腫瘤標示為1類，良性腫瘤標示為0類，呼叫LabelEncoder的transform方法，再次檢查「類別標籤字串」轉換成「對應數字」的工作是否正常完成
+le.transform(['M','B'])
+np.array([1,0])
+
+
+#4.訓練數據集80%的數據，測試數據集20%的數據，建立第一個模型管線。
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = \
+    train_test_split(X, y,
+                test_size=0.20,
+                stratify=y,
+                random_state=1)
+
+#5.結合轉換器和估計器到管線中
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
+
+#6.用pipe_lr管線執行fit方法的時候，StandardScaler首先會對「訓練數據集」套用fit與transform函數
+pipe_lr = make_pipeline(StandardScaler(),
+                        PCA(n_components=2),
+                        LogisticRegression(random_state=1,solver
+                        ='lbfgs'))
+pipe_lr.fit(X_train, y_train)
+y_pred = pipe_lr.predict(X_test)
+print('Test Accuracy: %.3f' % pipe_lr.score(X_test, y_test))
