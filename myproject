@@ -1,6 +1,20 @@
 1.將wdbc資料集分成三個部分：訓練數據集(training dataset)、測試數據集(test dataset)、驗證數據集(validation dataset)
   訓練數據集做「模型適合」、測試數據集做「數據轉換」的步驟。
 
-2.Scikit-learn Pipeline物件的工作原理視為「後設估計器」(meta-estimator)，將StandardScaler、PCA、LogisticRegression等物件串聯起來。
+2.函數make_pipeline接受任意數目的scikit-learn轉換器，Scikit-learn Pipeline物件的工作原理視為「後設估計器」(meta-estimator)，將StandardScaler、PCA、LogisticRegression等物件串聯起來。
 
 3.Test Accuracy: 0.956
+
+4.使用「K折交叉驗證法」(K-fold cross-validation)和「保留交叉驗證法」(holdout cross-validation)，這些方法可以幫助我們估計出一個可靠的「模型一般化效能」。
+  使用scikit-learn中的StandardScaler迭代器說明工作原理。
+Fold:  1, Class dist.: [256 153], Acc: 0.891
+Fold:  2, Class dist.: [256 153], Acc: 1.000
+Fold:  3, Class dist.: [256 153], Acc: 0.978
+Fold:  4, Class dist.: [256 153], Acc: 0.978
+Fold:  5, Class dist.: [256 153], Acc: 0.978
+Fold:  6, Class dist.: [257 153], Acc: 0.933
+Fold:  7, Class dist.: [257 153], Acc: 0.978
+Fold:  8, Class dist.: [257 153], Acc: 0.933
+Fold:  9, Class dist.: [257 153], Acc: 0.933
+Fold: 10, Class dist.: [257 153], Acc: 0.978
+CV accuracy: 0.958 +/- 0.032

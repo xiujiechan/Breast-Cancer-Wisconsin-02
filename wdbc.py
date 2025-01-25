@@ -40,3 +40,29 @@ pipe_lr = make_pipeline(StandardScaler(),
 pipe_lr.fit(X_train, y_train)
 y_pred = pipe_lr.predict(X_test)
 print('Test Accuracy: %.3f' % pipe_lr.score(X_test, y_test))
+#Test Accuracy: 0.956
+
+#7.Kfold 
+import numpy as np
+from sklearn.model_selection import StratifiedKFold
+kfold = StratifiedKFold(n_splits=10).split(X_train, y_train)
+scores = []
+for k, (train, test) in enumerate(kfold):
+    pipe_lr.fit(X_train[test], y_train[test])
+    score = pipe_lr.score(X_train[test], y_train[test])
+    scores.append(score)
+    print('Fold: %2d, Class dist.: %s, Acc: %.3f' % (k+1, np.bincount(y_train[train]), score))
+#Fold:  1, Class dist.: [256 153], Acc: 0.891
+#Fold:  2, Class dist.: [256 153], Acc: 1.000
+#Fold:  3, Class dist.: [256 153], Acc: 0.978
+#Fold:  4, Class dist.: [256 153], Acc: 0.978
+#Fold:  5, Class dist.: [256 153], Acc: 0.978
+#Fold:  6, Class dist.: [257 153], Acc: 0.933
+#Fold:  7, Class dist.: [257 153], Acc: 0.978
+#Fold:  8, Class dist.: [257 153], Acc: 0.933
+#Fold:  9, Class dist.: [257 153], Acc: 0.933
+#Fold: 10, Class dist.: [257 153], Acc: 0.978
+
+print('\nCV accuracy: %.3f +/- %.3f' %
+        (np.mean(scores), np.std(scores)))
+#CV accuracy: 0.958 +/- 0.032
