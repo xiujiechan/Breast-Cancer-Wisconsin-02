@@ -42,7 +42,7 @@ y_pred = pipe_lr.predict(X_test)
 print('Test Accuracy: %.3f' % pipe_lr.score(X_test, y_test))
 #Test Accuracy: 0.956
 
-#7.Kfold 
+#7.分層K折交叉驗證法，設定n_fold參數，來指定「折」的數目。
 import numpy as np
 from sklearn.model_selection import StratifiedKFold
 kfold = StratifiedKFold(n_splits=10).split(X_train, y_train)
@@ -66,3 +66,19 @@ for k, (train, test) in enumerate(kfold):
 print('\nCV accuracy: %.3f +/- %.3f' %
         (np.mean(scores), np.std(scores)))
 #CV accuracy: 0.958 +/- 0.032
+
+#8.kfold，使用「計分器」方便利用分層k折交叉驗證法來評估我們的模型。方法是cross_val_score
+from sklearn.model_selection import cross_val_score
+scores = cross_val_score(estimator=pipe_lr,
+                        X=X_train,
+                        y=y_train,
+                        cv=10,
+                        n_jobs=1)
+print('CV accuracy scores: %s' % scores)
+#CV accuracy: 0.958 +/- 0.032
+#CV accuracy scores: [0.93478261 0.93478261 0.95652174 
+#                     0.95652174 0.93478261 0.95555556
+#                     0.97777778 0.93333333 0.95555556 
+#                     0.95555556]
+print('CV accuracy scores: %.3f +/- %.3f' % (np.mean(scores),
+    np.std(scores)))
