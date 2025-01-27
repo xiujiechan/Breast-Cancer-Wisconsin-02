@@ -5,7 +5,7 @@ import numpy as np
 #1.讀入數據集
 df = pd.read_csv('\Breast Cancer Wisconsin 02\wdbc.data',header=None)
 
-#2.將後面30個特徵指派NumPy的陣列X。使用一個LabelEncoder物件，將原來類別標籤所使用的字串表示法(M和B)轉換成整數
+#2.將後面30個特徵指派NumPy的陣列X。使用一個LabelEncoder物件，將原來類別標籤所使用的字串表示法(M和B)轉換成整數，M=「惡性」，B=「良性」。
 X = df.loc[:, 2:].values
 y = df.loc[:, 1].values
 le = LabelEncoder()
