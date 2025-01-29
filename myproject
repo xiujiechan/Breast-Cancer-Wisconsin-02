@@ -18,3 +18,6 @@ Fold:  8, Class dist.: [257 153], Acc: 0.933
 Fold:  9, Class dist.: [257 153], Acc: 0.933
 Fold: 10, Class dist.: [257 153], Acc: 0.978
 CV accuracy: 0.958 +/- 0.032
+
+5.使用學習曲線和驗證曲線來對演算法除錯
+
