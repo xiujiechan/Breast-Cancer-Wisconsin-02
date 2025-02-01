@@ -179,8 +179,8 @@ pipe_svc = make_pipeline(StandardScaler(),
 param_range = [0.0001, 0.001, 0.01, 0.1,
                 1.0, 10.0, 100.0, 1000.0]
 param_grid = {'svc__kernel': ['linear', 'rbf'], 
-                'svc__C': [0.1, 1, 10, 100]}
-
+                'svc__C': [0.1, 1, 10, 100],
+                'svc__gamma': param_range}
 
 gs = GridSearchCV(estimator=pipe_svc,
                 param_grid=param_grid,
@@ -190,3 +190,4 @@ gs = GridSearchCV(estimator=pipe_svc,
 gs = gs.fit(X_train, y_train)
 print(gs.best_score_)
 print(gs.best_params_)
+#最佳參數組合是 'svc__C': 10 和 'svc__kernel': 'rbf'，其交叉驗證得分為 0.9869
