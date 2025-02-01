@@ -190,4 +190,3 @@ gs = GridSearchCV(estimator=pipe_svc,
 gs = gs.fit(X_train, y_train)
 print(gs.best_score_)
 print(gs.best_params_)
-#最佳參數組合是 'svc__C': 10 和 'svc__kernel': 'rbf'，其交叉驗證得分為 0.9869
