@@ -153,8 +153,8 @@ plt.plot(param_range, train_mean,
 plt.fill_between(param_range, 
                 train_mean + train_std,
                 train_mean - train_std, 
-                alpha=0.15,color='blue')
-plt.plot(param_range, train_mean,
+                alpha=0.15, color='blue')
+plt.plot(param_range, test_mean,
         color='green', linestyle='--',
         marker='s', markersize=5, 
         label='validation accuracy')
@@ -163,9 +163,30 @@ plt.fill_between(param_range,
                 test_mean - test_std,
                 alpha=0.15, color='green')
 plt.grid()
-plt.legend(loc='lower right')
 plt.xscale('log')
+plt.legend(loc='lower right')
 plt.xlabel('Parameter C')
 plt.ylabel('Accuracy')
 plt.ylim([0.8, 1.0])
 plt.show()
+
+#11.以網格搜尋找到最佳超參數組合，以便提高模型效能
+from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVC
+
+pipe_svc = make_pipeline(StandardScaler(),
+                        SVC(random_state=1))
+param_range = [0.0001, 0.001, 0.01, 0.1,
+                1.0, 10.0, 100.0, 1000.0]
+param_grid = {'svc__kernel': ['linear', 'rbf'], 
+                'svc__C': [0.1, 1, 10, 100]}
+
+
+gs = GridSearchCV(estimator=pipe_svc,
+                param_grid=param_grid,
+                scoring='accuracy',
+                cv=10,
+                n_jobs=-1)
+gs = gs.fit(X_train, y_train)
+print(gs.best_score_)
+print(gs.best_params_)
