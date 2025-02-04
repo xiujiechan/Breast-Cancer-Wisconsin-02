@@ -190,3 +190,8 @@ gs = GridSearchCV(estimator=pipe_svc,
 gs = gs.fit(X_train, y_train)
 print(gs.best_score_)
 print(gs.best_params_)
+
+#獨立的「測試數據集」評估選擇出來的 「最佳模型」
+clf = gs.best_estimator_
+clf.fit(X_train, y_train)
+print('Test accuracy: %.3f' % clf.score(X_test, y_test))
