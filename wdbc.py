@@ -191,7 +191,22 @@ gs = gs.fit(X_train, y_train)
 print(gs.best_score_)
 print(gs.best_params_)
 
+
 #獨立的「測試數據集」評估選擇出來的 「最佳模型」
 clf = gs.best_estimator_
 clf.fit(X_train, y_train)
 print('Test accuracy: %.3f' % clf.score(X_test, y_test))
+#Test accuracy: 0.974
+
+#-------------------------------------------------------------------
+#執行巢狀交叉驗證法
+gs = GridSearchCV(estimator=pipe_svc,
+                param_grid=param_grid,
+                scoring='accuracy',
+                cv=2)
+
+scores = cross_val_score(gs, X_train, y_train,
+                        scoring='accuracy', cv=5)
+
+print('CV accuracy: %.3f +/- %.3f' % (np.mean(scores),
+                                        np.std(scores)))
